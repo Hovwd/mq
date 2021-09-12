@@ -25,8 +25,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class TestEmployeeService {
 
-
-    private final static String csv = "Name,Email,Division,Age,Timezone\n" +
+    private final static String CSV = "Name,Email,Division,Age,Timezone\n" +
             "Gabrielle Clarkson,tamas@me_example.com,Accounting,25,2\n" +
             "Zoe Peters,gozer@icloud_example.com,Finance,30,3\n" +
             "Jacob Murray,lstein@me_example.com,Accounting,22,2\n" +
@@ -47,7 +46,7 @@ public class TestEmployeeService {
     public void getAllEmployeesTest() throws IOException {
         String fileName = "employee.csv";
         MockMultipartFile multipartFile =
-                new MockMultipartFile("csv", fileName, "text/csv", csv.getBytes());
+                new MockMultipartFile("csv", fileName, "text/csv", CSV.getBytes());
       List x =  employeeService.saveEmployees(multipartFile);
       assertEquals(x.size(), 4);
 

@@ -28,8 +28,8 @@ public class EmployeeService {
         for (Employee employee : employeeList) {
             employeeRepository.save(employee);
         }
-        return CsvUtil.csvToList(reapExcelDataFile.getInputStream());
-
+        log.info("csv file successfully imported");
+        return employeeList;
     }
 
     @Transactional(readOnly = true)

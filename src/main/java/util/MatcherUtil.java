@@ -40,7 +40,7 @@ public class MatcherUtil {
             MatchCombination matchCombination = new MatchCombination();
             matchCombination.setPairList(pairList);
 
-            matchCombination.setAverageMatchPercentage(allCombinationPercentage.get() / 2);
+            matchCombination.setAverageMatchPercentage(allCombinationPercentage.get() / pairList.size());
             matchCombinationList.add(matchCombination);
             if (matchCombinationsResult.getResult() == null ||
                     matchCombinationsResult.getResult().getAverageMatchPercentage() < matchCombination.getAverageMatchPercentage()) {

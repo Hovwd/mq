@@ -8,6 +8,6 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 public class ValidationErrorResponse {
-    String message;
-  List<String> validationMessages;
+    private String message;
+    private List<String> validationMessages;
 }

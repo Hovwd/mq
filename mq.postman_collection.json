@@ -1,0 +1,27 @@
+{
+	"info": {
+		"_postman_id": "3ac9dcfc-506f-4089-88ae-d3a758b5ef70",
+		"name": "mq",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "import",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": null
+			},
+			"response": []
+		},
+		{
+			"name": "get matches",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": null
+			},
+			"response": []
+		}
+	]
+}
