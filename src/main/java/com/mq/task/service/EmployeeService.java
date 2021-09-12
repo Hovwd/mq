@@ -22,9 +22,13 @@ public class EmployeeService {
     private final EmployeeRepository employeeRepository;
 
     @Transactional
-    public List<Employee> saveEmployees(MultipartFile reapExcelDataFile) throws IOException {
-
-        List<Employee> employeeList =  CsvUtil.csvToList(reapExcelDataFile.getInputStream());
+    public List<Employee> saveEmployees(MultipartFile reapExcelDataFile)  {
+        List<Employee> employeeList;
+        try {
+            employeeList = CsvUtil.csvToList(reapExcelDataFile.getInputStream());
+        } catch (IOException e) {
+            throw new RuntimeException("fail to store csv data: " + e.getMessage());
+        }
         for (Employee employee : employeeList) {
             employeeRepository.save(employee);
         }

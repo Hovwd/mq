@@ -1,14 +1,9 @@
 package util;
 
 import java.io.BufferedReader;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -16,8 +11,15 @@ import com.mq.task.entity.Employee;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
+import org.springframework.web.multipart.MultipartFile;
 
 public class CsvUtil {
+
+    public static String TYPE = "text/csv";
+
+    public static boolean hasCSVFormat(MultipartFile file) {
+      return   TYPE.equals(file.getContentType());
+    }
 
     public static List<Employee> csvToList(InputStream inputStream) {
         try (BufferedReader fileReader = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"));

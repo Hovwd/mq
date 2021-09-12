@@ -1,5 +1,6 @@
 package com.mq.task.controller;
 
+import com.mq.task.dto.ErrorResponse;
 import com.mq.task.dto.MatchCombinationsResult;
 import com.mq.task.entity.Employee;
 import com.mq.task.service.EmployeeService;
@@ -12,6 +13,8 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.util.List;
 
+import static util.CsvUtil.hasCSVFormat;
+
 @RestController()
 @RequestMapping("/mq")
 @RequiredArgsConstructor
@@ -21,11 +24,14 @@ public class MqController {
 
     @CrossOrigin
     @PostMapping("/import")
-    public ResponseEntity<List<Employee>> importCsv(@RequestParam("file") MultipartFile reapExcelDataFile
-    ) throws IOException {
-        List employeeLIst  = employeeService.saveEmployees(reapExcelDataFile);
-        ResponseEntity<List<Employee>> listResponseEntity = new ResponseEntity<>(employeeLIst, HttpStatus.OK);
-        return listResponseEntity;
+    public ResponseEntity<?> importCsv(@RequestParam("file") MultipartFile reapExcelDataFile
+    )  {
+        if (hasCSVFormat(reapExcelDataFile)) {
+            List employeeLIst = employeeService.saveEmployees(reapExcelDataFile);
+            ResponseEntity<List<Employee>> listResponseEntity = new ResponseEntity<>(employeeLIst, HttpStatus.OK);
+            return listResponseEntity;
+        }
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ErrorResponse("Please upload a csv file!"));
     }
 
     @CrossOrigin
