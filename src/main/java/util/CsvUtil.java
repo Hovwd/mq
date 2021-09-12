@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -15,10 +16,10 @@ import org.springframework.web.multipart.MultipartFile;
 
 public class CsvUtil {
 
-    public static String TYPE = "application/vnd.ms-excel";
+    public static List<String> TYPES = Arrays.asList("application/vnd.ms-excel", "text/csv");
 
     public static boolean hasCSVFormat(MultipartFile file) {
-      return   TYPE.equals(file.getContentType());
+      return   TYPES.contains(file.getContentType());
     }
 
     public static List<Employee> csvToList(InputStream inputStream) {
