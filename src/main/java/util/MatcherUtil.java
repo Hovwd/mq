@@ -16,39 +16,41 @@ public class MatcherUtil {
 
 
     public static MatchCombinationsResult constructCombinationsResult(final List<Employee> employeeList) {
-        List<Integer> indexList = IntStream.rangeClosed(0, employeeList.size() - 1)
-                .boxed().collect(Collectors.toList());
-        ArrayList<List<List<Integer>>> possibleCombinationList = new ArrayList<>();
-        computePossibleCombinations(indexList, new ArrayList<>(), possibleCombinationList);
 
         MatchCombinationsResult matchCombinationsResult = new MatchCombinationsResult();
-        List<MatchCombination> matchCombinationList = new ArrayList<>();
-        matchCombinationsResult.setCombinationList(matchCombinationList);
-        possibleCombinationList.forEach(combination -> {
-            AtomicInteger allCombinationPercentage = new AtomicInteger();
-            List<Pair> pairList = combination.stream().map(pairIndexes -> {
-                Pair pair = new Pair();
-                Employee employee1 = employeeList.get(pairIndexes.get(0));
-                Employee employee2 = employeeList.get(pairIndexes.get(1));
-                pair.setEmployee1(employee1.getName());
-                pair.setEmployee2(employee2.getName());
-                int pairMatchPercantage = calculateMatchPercentage(employee1, employee2);
-                allCombinationPercentage.addAndGet(pairMatchPercantage);
-                pair.setMatchPercentage(calculateMatchPercentage(employee1, employee2));
-                return pair;
-            }).collect(Collectors.toList());
-            MatchCombination matchCombination = new MatchCombination();
-            matchCombination.setPairList(pairList);
+        if(!employeeList.isEmpty()) {
+            List<Integer> indexList = IntStream.rangeClosed(0, employeeList.size() - 1)
+                    .boxed().collect(Collectors.toList());
+            ArrayList<List<List<Integer>>> possibleCombinationList = new ArrayList<>();
+            computePossibleCombinations(indexList, new ArrayList<>(), possibleCombinationList);
 
-            matchCombination.setAverageMatchPercentage(allCombinationPercentage.get() / pairList.size());
-            matchCombinationList.add(matchCombination);
-            if (matchCombinationsResult.getResult() == null ||
-                    matchCombinationsResult.getResult().getAverageMatchPercentage() < matchCombination.getAverageMatchPercentage()) {
-                matchCombinationsResult.setResult(matchCombination);
-            }
+            List<MatchCombination> matchCombinationList = new ArrayList<>();
+            matchCombinationsResult.setCombinationList(matchCombinationList);
+            possibleCombinationList.forEach(combination -> {
+                AtomicInteger allCombinationPercentage = new AtomicInteger();
+                List<Pair> pairList = combination.stream().map(pairIndexes -> {
+                    Pair pair = new Pair();
+                    Employee employee1 = employeeList.get(pairIndexes.get(0));
+                    Employee employee2 = employeeList.get(pairIndexes.get(1));
+                    pair.setEmployee1(employee1.getName());
+                    pair.setEmployee2(employee2.getName());
+                    int pairMatchPercantage = calculateMatchPercentage(employee1, employee2);
+                    allCombinationPercentage.addAndGet(pairMatchPercantage);
+                    pair.setMatchPercentage(calculateMatchPercentage(employee1, employee2));
+                    return pair;
+                }).collect(Collectors.toList());
+                MatchCombination matchCombination = new MatchCombination();
+                matchCombination.setPairList(pairList);
 
-        });
+                matchCombination.setAverageMatchPercentage(allCombinationPercentage.get() / pairList.size());
+                matchCombinationList.add(matchCombination);
+                if (matchCombinationsResult.getResult() == null ||
+                        matchCombinationsResult.getResult().getAverageMatchPercentage() < matchCombination.getAverageMatchPercentage()) {
+                    matchCombinationsResult.setResult(matchCombination);
+                }
 
+            });
+        }
 
         return matchCombinationsResult;
     }
