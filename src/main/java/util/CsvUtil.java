@@ -15,7 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 public class CsvUtil {
 
-    public static String TYPE = "text/csv";
+    public static String TYPE = "application/vnd.ms-excel";
 
     public static boolean hasCSVFormat(MultipartFile file) {
       return   TYPE.equals(file.getContentType());
@@ -33,7 +33,7 @@ public class CsvUtil {
 
             return employeeList;
         } catch (IOException e) {
-            throw new RuntimeException("fail to parse CSV file: " + e.getMessage());
+            throw new RuntimeException("fail to parse exel file: " + e.getMessage());
         }
     }
 
